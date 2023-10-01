@@ -1,15 +1,25 @@
 import logo from './logo.svg';
-<<<<<<< HEAD
 import React, {useState, useEffect} from 'react';
-import './App.css';
-=======
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Login from './Login';
 import SignUp from './SignUp';
->>>>>>> 90d3da448de28e0e05220ff9b6251d476731c6d4
 
 function App() {
+
+  const [data, setData] = useState([{}])
+
+  useEffect(() => {
+    fetch("/members").then(
+      res => res.json()
+    ).then(
+      data => {
+        setData(data)
+        console.log(data)
+      }
+    )
+  }, [])
+
   return (
     <div>
       <Routes>

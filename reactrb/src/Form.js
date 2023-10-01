@@ -15,7 +15,7 @@ function Form() {
   return(
     <div>
       <center>
-      <form formmethod="get">
+      <form>
         <label>
           Username: 
           <input type="text" value={inputUsername} onChange={handleUserChange}/>
