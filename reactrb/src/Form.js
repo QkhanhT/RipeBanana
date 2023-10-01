@@ -1,26 +1,32 @@
 import React, { useState } from 'react';
 
 function Form() {
-  const [inputValue, setInputValue] = useState('');
+  const [inputUsername, setUsername] = useState('');
+  const [inputPassword, setPassword] = useState('');
 
-  const handleInputChange = (event) => {
-    //setInputValue(event.target.value);
+  const handleUserChange = (event) => {
+    setUsername(event.target.value);
+  }
+
+  const handlePassChange = (event) => {
+    setPassword(event.target.value);
   }
 
   return(
     <div>
       <center>
-      <form>
+      <form formmethod="get">
         <label>
           Username: 
-          <input type="text" value={inputValue} onChange={handleInputChange}/>
-          
+          <input type="text" value={inputUsername} onChange={handleUserChange}/>
         </label>
         <label>
           Password: 
-          <input type="text" value={inputValue} onChange={handleInputChange}/>
-          
+          <input type="password" value={inputPassword} onChange={handlePassChange}/>
         </label>
+        <div>
+          <input type="submit" value = "Login"/>
+        </div>
       </form>
       </center>
       
