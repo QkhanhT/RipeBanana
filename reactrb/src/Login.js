@@ -10,12 +10,7 @@ function Login() {
                 </center>
             </section>
             <section>
-                {Form()}
-            </section>
-            <section>
-                <center>
-                    <button>Login</button>
-                </center>
+                <Form></Form>
             </section>
             <section>
                 <center>
