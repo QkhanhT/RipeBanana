@@ -17,7 +17,7 @@ function Form() {
       <center>
       <form>
         <label>
-          Username: 
+          Username:
           <input type="text" value={inputUsername} onChange={handleUserChange}/>
         </label>
         <label>
