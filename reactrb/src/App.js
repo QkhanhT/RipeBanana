@@ -7,18 +7,18 @@ import SignUp from './SignUp';
 
 function App() {
 
-  const [data, setData] = useState([{}])
+  // const [data, setData] = useState([{}])
 
-  useEffect(() => {
-    fetch("http://localhost:5000/members").then(
-      res => res.json()
-    ).then(
-      data => {
-        setData(data)
-        console.log(data)
-      }
-    )
-  }, [])
+  // useEffect(() => {
+  //   fetch("http://localhost:5000/signup").then(
+  //     res => res.json()
+  //   ).then(
+  //     data => {
+  //       setData(data)
+  //       console.log(data)
+  //     }
+  //   )
+  // }, [])
 
   return (
     <div>
