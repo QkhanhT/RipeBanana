@@ -12,6 +12,12 @@ class userAccount():
     def getPassword(self): 
         return self.__password
     
+    def convertToDictionary(self): #Convert to dictionary (form of document) and store to mongoDB
+        return {
+            "username:": self.__name,
+            "password": self.__password
+        }
+    
 class accountList():
     def __init__(self) -> None: #type annotation
         self.__accounts = []
