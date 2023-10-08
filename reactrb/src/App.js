@@ -6,12 +6,12 @@ import Login from './Login';
 import SignUp from './SignUp';
 
 function App() {
-
   const [data, setData] = useState([{}])
 
+  /*Fetch data from backend */
   useEffect(() => {
     fetch("http://localhost:5000/members").then(
-      res => res.json()
+      res => res.json() /*Contains array from the json object */
     ).then(
       data => {
         setData(data)
