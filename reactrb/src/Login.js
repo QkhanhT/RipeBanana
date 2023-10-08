@@ -10,7 +10,6 @@ import SignUp from "./SignUp";
 function Login() {
     return (
         <div>
-        
             <section>
                 <center>
                     <h1>RipeBanana</h1>
