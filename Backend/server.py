@@ -26,7 +26,7 @@ def signup():
         existing_user = users.find_one({'username' : username})
 
         if existing_user is None:
-            user_id = users.insert_one({'username': encrypt(username, 2, 1), 'password': encrypt(password, 5, -1)})
+            user_id = users.insert_one({'username': encrypt(username,2,1), 'password': encrypt(password, 5, -1)})
             return 'Account Created'
         else:        
             print('That username already exists!')
