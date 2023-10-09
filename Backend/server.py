@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, request, session,redirect
 from flask_cors import CORS
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from cipher import encrypt, decrypt
 
 app = Flask(__name__)
 # Configure CORS to allow requests from localhost:3000
@@ -25,7 +26,7 @@ def signup():
         existing_user = users.find_one({'username' : username})
 
         if existing_user is None:
-            user_id = users.insert_one({'username': username, 'password': password})
+            user_id = users.insert_one({'username': encrypt(username, 2, 1), 'password': encrypt(password, 5, -1)})
             return 'Account Created'
         else:        
             print('That username already exists!')
