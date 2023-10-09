@@ -6,7 +6,7 @@ from cipher import encrypt, decrypt
 
 app = Flask(__name__)
 # Configure CORS to allow requests from localhost:3000
-cors = CORS(app, resources={r"/*": {"origins": "http://localhost:3000/"}})
+cors = CORS(app, resources={"/*": {"origins": "*"}})
 
 
 # Replace the placeholder with your Atlas connection string
