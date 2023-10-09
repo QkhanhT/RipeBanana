@@ -18,7 +18,7 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Send a request to Flask backend with the username and password.
-    const response = await fetch('/signup', {
+    const response = await fetch('http://localhost:5000/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

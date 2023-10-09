@@ -33,6 +33,24 @@ def signup():
             return 'Username already exists'
     return 'TBD'
 
+@app.route("/", methods = ['POST', 'GET'])
+def login():
+    if request.method == 'GET':
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+        
+        fetched_user = users.find_one({'username' : encrypt(username,2,1)})
+
+        if not fetched_user is None:
+            if fetched_user.password == encrypt(password, 5, -1):
+                print("Login Success")
+            else:
+                print("Incorrect Password")
+        else:
+            print("Username not found, please sign up")
+    return 'TBD'
+
 if __name__ == "__main__":
     app.run(debug = True)
 
