@@ -14,9 +14,10 @@ function Login() {
 
   const handleSubmit = async (e) => {
       e.preventDefault();
+      console.log('hi');
       // Send a request to Flask backend with the username and password.
       const response = await fetch('http://localhost:5000/', {
-      method: 'GET',
+      method: 'POST',
       headers: {
           'Content-Type': 'application/json',
       },
@@ -28,7 +29,6 @@ function Login() {
     <form onSubmit={handleSubmit}>
     <div>
       <center>
-      <form>
         <label>
           Username:
           <input type="text" id="inputUsername" value={inputUsername} onChange={handleUserChange}/>
@@ -40,9 +40,7 @@ function Login() {
         <div>
           <input type="submit" value = "Login"/>
         </div>
-      </form>
       </center>
-      
     </div>
     </form>
   );

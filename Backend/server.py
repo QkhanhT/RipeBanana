@@ -6,7 +6,7 @@ from cipher import encrypt, decrypt
 
 app = Flask(__name__)
 # Configure CORS to allow requests from localhost:3000
-cors = CORS(app, resources={r"/*": {"origins": "http://localhost:3000/"}})
+cors = CORS(app, resources={"/*": {"origins": "*"}})
 
 
 # Replace the placeholder with your Atlas connection string
@@ -35,15 +35,15 @@ def signup():
 
 @app.route("/", methods = ['POST', 'GET'])
 def login():
-    if request.method == 'GET':
+    if request.method == 'POST':
         data = request.get_json()
-        username = data.get('username')
-        password = data.get('password')
-        
-        fetched_user = users.find_one({'username' : encrypt(username,2,1)})
+        username = data.get('inputUsername')
+        password = data.get('inputPassword')
 
-        if not fetched_user is None:
-            if fetched_user.password == encrypt(password, 5, -1):
+        fetched_user = users.find_one({'username' : encrypt(username,2,1)})
+        
+        if fetched_user:
+            if str(fetched_user['password']) == encrypt(password, 5, -1):
                 print("Login Success")
             else:
                 print("Incorrect Password")
