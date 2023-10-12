@@ -34,7 +34,7 @@ function Main() {
         const resultFromBackend = await response.json(); 
 
         //use "setResultMessageLogin" function defined in hook to update state variable "resultMessageLogin"
-        setResultMessageLogin(data.returnMessage); 
+        setResultMessageLogin(resultFromBackend.returnMessage); 
     };
     //Login Page UI
     return (
