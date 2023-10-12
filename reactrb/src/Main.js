@@ -5,8 +5,10 @@ import { BrowserRouter, Router, Routes, Route , Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 function Main() {
+    //React Hook for Username, Password, and Login message
     const [inputUsername, setUsername] = useState('');
     const [inputPassword, setPassword] = useState('');
+    const [resultMessageLogin, setResultMessageLogin] = useState('');
 
     const handleUserChange = (event) => {
         setUsername(event.target.value);
@@ -16,6 +18,7 @@ function Main() {
         setPassword(event.target.value);
     };
 
+    //Login send to backend
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Send a request to Flask backend with the username and password.
@@ -26,7 +29,14 @@ function Main() {
         },
         body: JSON.stringify({ inputUsername, inputPassword }),
         });
+
+        //Wait for backend to return result of logging in
+        const resultFromBackend = await response.json(); 
+
+        //use "setResultMessageLogin" function defined in hook to update state variable "resultMessageLogin"
+        setResultMessageLogin(data.returnMessage); 
     };
+    //Login Page UI
     return (
         <div>
             <section>
@@ -49,6 +59,9 @@ function Main() {
                         </label>
                         <div>
                         <button type="submit">Log In</button>
+                        </div>
+                        <div>
+                            <h4>{resultMessageLogin}</h4> 
                         </div>
                     </center>        
                 </div>

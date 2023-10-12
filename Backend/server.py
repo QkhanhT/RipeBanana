@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, session,redirect
+from flask import Flask, render_template, url_for, request, session,redirect, jsonify
 from flask_cors import CORS
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
@@ -57,10 +57,15 @@ def login():
             print("Username not found, please sign up")
     
     #Return statement
+    returnMessage = ""
     if success:
-        return 'login success' + fetched_user['username']
+        returnMessage = 'login success' + fetched_user['username']
     else:
-        return 'login failed'
+        returnMessage =  'login failed'
+        
+    #Return the return message (parse as json)
+    returnDict = {"returnMessage":returnMessage}
+    return jsonify(returnDict)
 
 if __name__ == "__main__":
     app.run(debug = True)
