@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 //import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter, Router, Routes, Route , Link} from "react-router-dom";
-
-import { useParams } from "react-router-dom";
+import './Main.css'
+import { useParams, useNavigate } from "react-router-dom";
+import logo from './ripebanana-removebg.png';
 
 function Main() {
     const [inputUsername, setUsername] = useState('');
     const [inputPassword, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleUserChange = (event) => {
         setUsername(event.target.value);
@@ -26,42 +28,47 @@ function Main() {
         },
         body: JSON.stringify({ inputUsername, inputPassword }),
         });
+        navigate('/Dashboard')
     };
     return (
-        <div>
-            <section>
-                <center>
-                    <h1>RipeBanana</h1>
-                    <h2>Log in</h2>
-                </center>
-            </section>
-            <section>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <center>
-                        <label>
-                        Username:
-                        <input type="text" id="inputUsername" value={inputUsername} onChange={handleUserChange}/>
-                        </label>
-                        <label>
-                        Password: 
-                        <input type="password" id="inputPassword" value={inputPassword} onChange={handlePassChange}/>
-                        </label>
-                        <div>
-                        <button type="submit">Log In</button>
-                        </div>
-                    </center>        
-                </div>
-            </form>
-            </section>
-            <section>
-                <center>
-                    <p>New User? </p>
-                    <nav>
-                    <Link to="signup">Sign Up</Link>
-                    </nav>
-                </center>   
-            </section>
+        <div className="login-background">
+            <div className="logo">
+                <img src={logo} alt="RipeBanana" width="220" height="200" style={{ marginRight: -20, marginBottom: 20 }}/>
+            </div>
+            <div className="login-container">
+                <form className="form-container" onSubmit={handleSubmit}>
+                    <div className="login-title">
+                        <h2 className="header">Log In</h2>
+                    </div>
+                    <div className="user-input">
+                        <label htmlFor="username">Username</label>
+                        <input 
+                        type="text" 
+                        id="inputUsername" 
+                        value={inputUsername} 
+                        onChange={handleUserChange}
+                        placeholder="Username"
+                        />
+                    </div>
+                    <div className="user-input">
+                        <label htmlFor="password">Password</label>
+                        <input 
+                        type="password" 
+                        id="inputPassword" 
+                        value={inputPassword} 
+                        onChange={handlePassChange}
+                        placeholder="••••••••"
+                        />
+                    </div>
+                    <div className="login-button-container">
+                        <button className="login-button" type="submit">Log In</button>
+                    </div> 
+                    <div className="account-signup">
+                        Don't have an account?&nbsp;
+                        <Link to="signup" className="signup-here">Sign up here</Link>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }
