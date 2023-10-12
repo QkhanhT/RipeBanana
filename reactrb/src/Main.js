@@ -8,6 +8,8 @@ import logo from './ripebanana-removebg.png';
 function Main() {
     const [inputUsername, setUsername] = useState('');
     const [inputPassword, setPassword] = useState('');
+    const [error, setError] = useState(false);
+    const [errMessage, setErrMessage] = useState('');
     const navigate = useNavigate();
 
     const handleUserChange = (event) => {
@@ -20,16 +22,45 @@ function Main() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Send a request to Flask backend with the username and password.
-        const response = await fetch('/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ inputUsername, inputPassword }),
+        const requestData = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ inputUsername, inputPassword }),
+        }
+        fetch('/', requestData)
+
+        .then((response) => response.text())
+        .then(function(data){
+            data = JSON.parse(data);
+            if(data.code === 200){
+                setError(false)
+                navigate('/dashboard')
+            }
+            else {
+                if(data.message == "incorrect_password"){
+                    setErrMessage("The password you entered was incorrect")
+                }
+                else{
+                    setErrMessage("Username not found. Please sign up")
+                }
+                setError(true)
+            }
         });
-        navigate('/Dashboard')
     };
+
+    // If there is no error, errorMessage is not rendered
+    const errorMessage = () => {
+        return(
+            <div style={{
+                display: error ? '' : 'none',
+            }}>
+                <p>{errMessage}</p>
+            </div>
+        )
+    }
+
     return (
         <div className="login-background">
             <div className="logo">
@@ -66,6 +97,9 @@ function Main() {
                     <div className="account-signup">
                         Don't have an account?&nbsp;
                         <Link to="signup" className="signup-here">Sign up here</Link>
+                    </div>
+                    <div>
+                        {errorMessage()}
                     </div>
                 </form>
             </div>

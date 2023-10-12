@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, session,redirect
+from flask import Flask, render_template, url_for, request, session,redirect, jsonify
 from flask_cors import CORS
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
@@ -33,36 +33,27 @@ def signup():
             return 'Username already exists'
     return 'TBD'
 
-#Login Method
 @app.route("/", methods = ['POST', 'GET'])
 def login():
     if request.method == 'POST':
-        #Get data from request
         data = request.get_json()
         username = data.get('inputUsername')
         password = data.get('inputPassword')
-
-        #Find user in collections
         fetched_user = users.find_one({'username' : encrypt(username,2,1)})
-        
-        #Check login
-        success = False
+        message = {}
         if fetched_user:
-            if str(fetched_user['password']) == encrypt(password, 5, -1):
+            if fetched_user['password']== encrypt(password, 5, -1):
                 print("Login Success")
-                success = True
+                message = {"message": "success", "code": 200}
+                return jsonify(message)
             else:
                 print("Incorrect Password")
+                message = {"message": "incorrect_password", "code": 400}
+                return jsonify(message)
         else:
             print("Username not found, please sign up")
-    
-    #Return statement
-    if success:
-        return 'login success' + fetched_user['username']
-    else:
-        return 'login failed'
+            message = {"message": "username_not_found", "code": 400}
+            return jsonify(message)
 
 if __name__ == "__main__":
     app.run(debug = True)
-
-

@@ -4,6 +4,8 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Main from './Main';
 import SignUp from './SignUp';
+import Dashboard from './Dashboard';
+import PlaceHolder from './PlaceHolder';
 
 function App() {
 
@@ -12,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element = {<Main/>}></Route>
         <Route path="signup" element = {<SignUp/>}></Route>
+        <Route path="dashboard" element = {<PlaceHolder/>}></Route>
       </Routes>
     </div>
   );

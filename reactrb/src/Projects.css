@@ -1,0 +1,25 @@
+/* Projects.css */
+
+/* Style for the project container */
+.project-container {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Style for the project details */
+  .project-details {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Style for the input and buttons */
+  .project-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
