@@ -6,28 +6,49 @@ import logo from './ripebanana-removebg.png';
 function SignUp() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  const [shouldDisplay, setDisplay] = useState(false);
+  const [dispMessage, setMessage] = useState('');
   const handleUsernameChange = (e) => {
-    console.log(e.target.value)
     setUsername(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
-    console.log(e.target.value)
     setPassword(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Send a request to Flask backend with the username and password.
-    const response = await fetch('/signup', {
+    const requestData = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password }),
-    });
+      body: JSON.stringify({username, password}),
+    }
+    fetch('/signup', requestData)
+    .then((response) => response.text())
+    .then(function(data){
+      data = JSON.parse(data)
+      if(data.code == 200){
+        setMessage("Account created. Please go to login page.")
+      }
+      else{
+        setMessage(data.message + " is already taken. Please try again.")
+      }
+      setDisplay(true)
+    })
   };
+
+  const signUpMessage = () => {
+    return(
+      <div style={{
+        display: shouldDisplay ? '' : 'none',
+      }}>
+        <p>{dispMessage}</p>
+      </div>
+    )
+  } 
 
   return (
     <div className="signup-background">
@@ -72,6 +93,9 @@ function SignUp() {
           </div>
           <div className="signup-button-container">
             <button className="signup-button" type="submit" >Sign Up</button>
+          </div>
+          <div>
+            {signUpMessage()}
           </div>
           <div className="account-exists">
             Returning User?&nbsp;

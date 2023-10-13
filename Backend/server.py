@@ -23,14 +23,16 @@ def signup():
         username = data.get('username')
         password = data.get('password')
         
-        existing_user = users.find_one({'username' : username})
+        existing_user = users.find_one({'username' : encrypt(username,2,1)})
 
         if existing_user is None:
             user_id = users.insert_one({'username': encrypt(username,2,1), 'password': encrypt(password, 5, -1)})
-            return 'Account Created'
+            message = {"message": "account_created", "code": 200}
+            return jsonify(message)
         else:        
             print('That username already exists!')
-            return 'Username already exists'
+            message = {"message": username, "code": 400}
+            return jsonify(message)
     return 'TBD'
 
 @app.route("/", methods = ['POST', 'GET'])
@@ -40,7 +42,6 @@ def login():
         username = data.get('inputUsername')
         password = data.get('inputPassword')
         fetched_user = users.find_one({'username' : encrypt(username,2,1)})
-        message = {}
         if fetched_user:
             if fetched_user['password']== encrypt(password, 5, -1):
                 print("Login Success")
