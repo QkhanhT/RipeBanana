@@ -56,7 +56,7 @@ def login():
                 projects = []
                 for x in userProjects.find({}, {"name" : 1, "hardware1" : 1, "hardware2" : 2}):
                     projects.append(x)
-                message = {"message": "success", "code": 200}
+                message = {"message": "success", "projects" : projects, "code": 200}
                 return jsonify(message)
             else:
                 print("Incorrect Password")
