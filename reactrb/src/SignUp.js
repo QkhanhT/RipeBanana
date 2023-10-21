@@ -6,6 +6,8 @@ import logo from './ripebanana-removebg.png';
 function SignUp() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [resultMessageSignUp, setResultMessageSignUp] = useState('');
 
   const handleUsernameChange = (e) => {
     console.log(e.target.value)
@@ -17,6 +19,12 @@ function SignUp() {
     setPassword(e.target.value);
   };
 
+  const handleConfirmPasswordChange = (e) => {
+    console.log(e.target.value)
+    setConfirmPassword(e.target.value);
+  };
+
+  //Send to backend
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Send a request to Flask backend with the username and password.
@@ -25,8 +33,14 @@ function SignUp() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, password, confirmPassword }),
     });
+
+    //Wait for backend to return result of logging in
+    const resultFromBackend = await response.json(); 
+
+    //use "setResultMessageLogin" function defined in hook to update state variable "resultMessageLogin"
+    setResultMessageSignUp(resultFromBackend.returnMessageSignIn);
   };
 
   return (
@@ -64,9 +78,9 @@ function SignUp() {
             <label htmlFor="password">Confirm Password</label>
             <input
               type="password"
-              // id="password"
-              // value={password}
-              // onChange={handlePasswordChange}
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
               placeholder="••••••••"
             />
           </div>
@@ -76,6 +90,9 @@ function SignUp() {
           <div className="account-exists">
             Returning User?&nbsp;
             <Link to="/" className="login-here">Login here</Link>
+          </div>
+          <div>
+              {resultMessageSignUp}
           </div>
         </form>
       </div>

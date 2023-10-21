@@ -22,15 +22,23 @@ def signup():
         data = request.get_json()
         username = data.get('username')
         password = data.get('password')
+        confirmPassword = data.get('confirmPassword')
+        
+        if password != confirmPassword:
+            #Return the return message (parse as json)
+            returnDict = {"returnMessageSignIn":'passwords do not match'}
+            return jsonify(returnDict)
         
         existing_user = users.find_one({'username' : username})
 
         if existing_user is None:
             user_id = users.insert_one({'username': encrypt(username,2,1), 'password': encrypt(password, 5, -1)})
-            return 'Account Created'
+            returnDict = {"returnMessageSignIn":'Account Created'}
+            return jsonify(returnDict)
         else:        
             print('That username already exists!')
-            return 'Username already exists'
+            returnDict = {"returnMessageSignIn":'Username already exists'}
+            return jsonify(returnDict)
     return 'TBD'
 
 @app.route("/", methods = ['POST', 'GET'])
