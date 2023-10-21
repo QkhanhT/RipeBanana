@@ -47,6 +47,9 @@ def login():
         if fetched_user:
             if fetched_user['password']== encrypt(password, 5, -1):
                 print("Login Success")
+                projects = []
+                for x in userProjects.find({}, {"name" : 1, "hardware1" : 1, "hardware2" : 2}):
+                    projects.append(x)
                 message = {"message": "success", "code": 200}
                 return jsonify(message)
             else:
@@ -58,7 +61,7 @@ def login():
             message = {"message": "username_not_found", "code": 400}
             return jsonify(message)
 
-@app.route("/dashboard/checkout", methods = ['POST', 'GET'])
+@app.route("/dashboard/checkout/hw1", methods = ['POST', 'GET'])
 def checkout():
     if request.method == 'POST':
         data = request.get_json()
@@ -70,8 +73,13 @@ def checkout():
         if(availability > checkOutAmount):
             project
 
-            
-
+@app.route("/dashboard/checkin/hw1", methods = ['POST', 'GET'])          
+def checkout():
+    if request.method == 'POST':
+        data = request.get_json()
+        checkInValue = data.get('checkInValueHW1')
+        hardwareSets = hardwareSets.find_one({'name' : 'HardwareSet 1'})
+        project = userProjects.find_one({})
         
 
 
