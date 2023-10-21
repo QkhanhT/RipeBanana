@@ -24,6 +24,12 @@ def signup():
         data = request.get_json()
         username = data.get('username')
         password = data.get('password')
+        confirmPassword = data.get('confirmPassword')
+        
+        if password != confirmPassword:
+            #Return the return message (parse as json)
+            message = {"message": "passwords_not_match", "code": 300}
+            return jsonify(message)
         
         existing_user = users.find_one({'username' : encrypt(username,2,1)})
 
