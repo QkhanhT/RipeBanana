@@ -15,6 +15,8 @@ uri = "mongodb+srv://ripebanana582:k91ciU1pGyccvRNi@userlogin.qczqbbg.mongodb.ne
 client = MongoClient(uri, server_api=ServerApi('1'))
 db = client.RipeBanana
 users = db.users
+hardwareSets = db.hardwareSets
+userProjects = db.userProjects
 
 @app.route("/signup", methods = ['POST', 'GET'])
 def signup():
@@ -55,6 +57,23 @@ def login():
             print("Username not found, please sign up")
             message = {"message": "username_not_found", "code": 400}
             return jsonify(message)
+
+@app.route("/dashboard/checkout", methods = ['POST', 'GET'])
+def checkout():
+    if request.method == 'POST':
+        data = request.get_json()
+        checkOutAmount = data.get('checkOutAmount')
+        hardwareSet = hardwareSets.find_one({'name' : data.get('hardwareSet')})
+        project = userProjects.find_one({'name' : data.get('projectName')})
+
+        availability = hardwareSet['availability']
+        if(availability > checkOutAmount):
+            project
+
+            
+
+        
+
 
 if __name__ == "__main__":
     app.run(debug = True)
