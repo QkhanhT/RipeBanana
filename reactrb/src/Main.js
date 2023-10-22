@@ -4,6 +4,10 @@ import { BrowserRouter, Router, Routes, Route , Link} from "react-router-dom";
 import './Main.css'
 import { useParams, useNavigate } from "react-router-dom";
 import logo from './ripebanana-removebg.png';
+import Dashboard from './Dashboard';
+export var projects = [];
+export var sets = [];
+
 
 function Main() {
     const [inputUsername, setUsername] = useState('');
@@ -36,6 +40,9 @@ function Main() {
             data = JSON.parse(data);
             if(data.code === 200){
                 setError(false)
+                projects = data.projects
+                sets = data.sets
+                console.log(sets)
                 navigate('/dashboard')
             }
             else {
