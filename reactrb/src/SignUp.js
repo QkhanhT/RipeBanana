@@ -8,12 +8,19 @@ function SignUp() {
   const [password, setPassword] = useState('');
   const [shouldDisplay, setDisplay] = useState(false);
   const [dispMessage, setMessage] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    console.log(e.target.value)
+    setConfirmPassword(e.target.value);
   };
 
   const handleSubmit = async (e) => {
@@ -24,14 +31,19 @@ function SignUp() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({username, password}),
+      //Fields to send to backend
+      body: JSON.stringify({username, password, confirmPassword}),
     }
     fetch('/signup', requestData)
     .then((response) => response.text())
     .then(function(data){
+      //Return message from backend after sign in
       data = JSON.parse(data)
       if(data.code == 200){
         setMessage("Account created. Please go to login page.")
+      }
+      else if(data.code == 300){
+        setMessage("Passwords don't match")
       }
       else{
         setMessage(data.message + " is already taken. Please try again.")
@@ -85,9 +97,9 @@ function SignUp() {
             <label htmlFor="password">Confirm Password</label>
             <input
               type="password"
-              // id="password"
-              // value={password}
-              // onChange={handlePasswordChange}
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
               placeholder="••••••••"
             />
           </div>
