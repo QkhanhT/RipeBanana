@@ -54,9 +54,13 @@ def login():
             if fetched_user['password']== encrypt(password, 5, -1):
                 print("Login Success")
                 projects = []
-                for x in userProjects.find({}, {"name" : 1, "hardware1" : 1, "hardware2" : 2}):
+                sets = []
+                for x in userProjects.find({}, {"_id": 0, "name" : 1, "hardware1" : 1, "hardware2" : 1}):
                     projects.append(x)
-                message = {"message": "success", "projects" : projects, "code": 200}
+                for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "capacity" : 1}):
+                    sets.append(x)
+                print(sets)
+                message = {"message": "success", "projects": projects, "sets": sets, "code": 200}
                 return jsonify(message)
             else:
                 print("Incorrect Password")
@@ -67,25 +71,152 @@ def login():
             message = {"message": "username_not_found", "code": 400}
             return jsonify(message)
 
-@app.route("/dashboard/checkout/hw1", methods = ['POST', 'GET'])
-def checkout():
-    if request.method == 'POST':
-        data = request.get_json()
-        checkOutAmount = data.get('checkOutAmount')
-        hardwareSet = hardwareSets.find_one({'name' : data.get('hardwareSet')})
-        project = userProjects.find_one({'name' : data.get('projectName')})
 
-        availability = hardwareSet['availability']
-        if(availability > checkOutAmount):
-            project
 
 @app.route("/dashboard/checkin/hw1", methods = ['POST', 'GET'])          
-def checkout():
+def checkinHW1():
     if request.method == 'POST':
         data = request.get_json()
-        checkInValue = data.get('checkInValueHW1')
-        hardwareSets = hardwareSets.find_one({'name' : 'HardwareSet 1'})
-        project = userProjects.find_one({})
+        checkInValue = int(data.get('valueHW1'))
+        set = hardwareSets.find_one({'name' : 'HardwareSet 1'})
+        project = userProjects.find_one({'name' : data.get('projectId')})
+
+        availability = int(set['availability'])
+        capacity = int(set['capacity'])
+        if(availability + checkInValue <= capacity and int(project['hardware1']) - checkInValue >= 0): #If enough hardware to checkin and doesnt exceed capacity
+            availability = availability + checkInValue
+            hardwareSets.update_one({'name' : 'HardwareSet 1'}, {"$set": {'availability' : availability}})
+            print("Checkin successful")
+            userProjects.update_one({'name' : data.get('projectId')}, {"$set": {'hardware1' : int(project['hardware1']) - checkInValue}})
+            
+            projects = []
+            for x in userProjects.find({}, {"_id": 0, "name" : 1, "hardware1" : 1, "hardware2" : 1}):
+                projects.append(x)
+            message = {"message": "success", "projects": projects, "code": 200}
+            return jsonify(message)
+        elif (availability + checkInValue > capacity and int(project['hardware1']) - checkInValue >= 0): #If enough hardware to checkin but exceeds capacity
+            hardwareSets.update_one({'name' : 'HardwareSet 1'}, {"$set": {'availability' : 100}})
+            print("Checkin successful however exceeds capacity")
+            userProjects.update_one({'name' : data.get('projectId')}, {"$set": {'hardware1' : int(project['hardware1']) - (capacity - availability)}}) 
+            
+            projects = []
+            for x in userProjects.find({}, {"_id": 0, "name" : 1, "hardware1" : 1, "hardware2" : 1}):
+                projects.append(x)
+            message = {"message": "partial success", "projects": projects, "code": 200}
+            return jsonify(message)
+        elif (int(project['hardware1']) - checkInValue < 0): #If not enough hardware to checkin
+            print("Checkin unsuccessful, you do not have enough hardware to checkin")
+            message = {"message": "failed", "code": 400}
+            return jsonify(message)
+
+
+
+@app.route("/dashboard/checkout/hw1", methods = ['POST', 'GET'])
+def checkoutHW1():
+    if request.method == 'POST':
+        data = request.get_json()
+        checkOutAmount = int(data.get('valueHW1'))
+        set = hardwareSets.find_one({'name' : 'HardwareSet 1'})
+        project = userProjects.find_one({'name' : data.get('projectId')})
+
+        availability = int(set['availability'])
+        if availability == 0:
+            print("Checkout failed, no hardware available")
+            message = {"message": "failed", "code": 400}
+            return jsonify(message)
+        elif(availability > checkOutAmount):
+            availability = availability - checkOutAmount
+            hardwareSets.update_one({'name' : 'HardwareSet 1'}, {"$set": {'availability' : availability}})
+            print("Checkout successful")
+            userProjects.update_one({'name' : data.get('projectId')}, {"$set": {'hardware1' : int(project['hardware1']) + checkOutAmount}})
+            
+            projects = []
+            for x in userProjects.find({}, {"_id": 0, "name" : 1, "hardware1" : 1, "hardware2" : 1}):
+                projects.append(x)
+            message = {"message": "success", "projects": projects, "code": 200}
+            return jsonify(message)
+        else:
+            hardwareSets.update_one({'name' : 'HardwareSet 1'}, {"$set": {'availability' : 0}})
+            print("Checkout successful, however not enough hardware availableto give you the full amount")
+            userProjects.update_one({'name' : data.get('projectId')}, {"$set": {'hardware1' : int(project['hardware1']) + availability}})
+            
+            projects = []
+            for x in userProjects.find({}, {"_id": 0, "name" : 1, "hardware1" : 1, "hardware2" : 1}):
+                projects.append(x)
+            message = {"message": "partial success", "projects": projects, "code": 200}
+            return jsonify(message)
+
+@app.route("/dashboard/checkin/hw2", methods = ['POST', 'GET'])          
+def checkinHW2():
+    if request.method == 'POST':
+        data = request.get_json()
+        checkInValue = int(data.get('valueHW2'))
+        set = hardwareSets.find_one({'name' : 'HardwareSet 2'})
+        project = userProjects.find_one({'name' : data.get('projectId')})
+
+        availability = int(set['availability'])
+        capacity = int(set['capacity'])
+        if(availability + checkInValue <= capacity and int(project['hardware2']) - checkInValue >= 0): #If enough hardware to checkin and doesnt exceed capacity
+            availability = availability + checkInValue
+            hardwareSets.update_one({'name' : 'HardwareSet 2'}, {"$set": {'availability' : availability}})
+            print("Checkin successful")
+            userProjects.update_one({'name' : data.get('projectId')}, {"$set": {'hardware2' : int(project['hardware2']) - checkInValue}})
+            
+            projects = []
+            for x in userProjects.find({}, {"_id": 0, "name" : 1, "hardware1" : 1, "hardware2" : 1}):
+                projects.append(x)
+            message = {"message": "success", "projects": projects, "code": 200}
+            return jsonify(message)
+        elif (availability + checkInValue > capacity and int(project['hardware2']) - checkInValue >= 0): #If enough hardware to checkin but exceeds capacity
+            hardwareSets.update_one({'name' : 'HardwareSet 2'}, {"$set": {'availability' : 100}})
+            print("Checkin successful however exceeds capacity")
+            userProjects.update_one({'name' : data.get('projectId')}, {"$set": {'hardware2' : int(project['hardware2']) - (capacity - availability)}}) 
+            
+            projects = []
+            for x in userProjects.find({}, {"_id": 0, "name" : 1, "hardware1" : 1, "hardware2" : 1}):
+                projects.append(x)
+            message = {"message": "partial success", "projects": projects, "code": 200}
+            return jsonify(message)
+        elif (int(project['hardware2']) - checkInValue < 0): #If not enough hardware to checkin
+            print("Checkin unsuccessful, you do not have enough hardware to checkin")
+            message = {"message": "failed", "code": 400}
+            return jsonify(message)
+
+
+@app.route("/dashboard/checkout/hw2", methods = ['POST', 'GET'])
+def checkoutHW2():
+    if request.method == 'POST':
+        data = request.get_json()
+        checkOutAmount = int(data.get('valueHW2'))
+        set = hardwareSets.find_one({'name' : 'HardwareSet 2'})
+        project = userProjects.find_one({'name' : data.get('projectId')})
+
+        availability = int(set['availability'])
+        if availability == 0:
+            print("Checkout failed, no hardware available")
+            message = {"message": "failed", "code": 400}
+            return jsonify(message)
+        elif(availability > checkOutAmount):
+            availability = availability - checkOutAmount
+            hardwareSets.update_one({'name' : 'HardwareSet 2'}, {"$set": {'availability' : availability}})
+            print("Checkout successful")
+            userProjects.update_one({'name' : data.get('projectId')}, {"$set": {'hardware2' : int(project['hardware2']) + checkOutAmount}})
+            
+            projects = []
+            for x in userProjects.find({}, {"_id": 0, "name" : 1, "hardware1" : 1, "hardware2" : 1}):
+                projects.append(x)
+            message = {"message": "success", "projects": projects, "code": 200}
+            return jsonify(message)
+        else:
+            hardwareSets.update_one({'name' : 'HardwareSet 2'}, {"$set": {'availability' : 0}})
+            print("Checkout successful, however not enough hardware availableto give you the full amount")
+            userProjects.update_one({'name' : data.get('projectId')}, {"$set": {'hardware2' : int(project['hardware2']) + availability}})
+            
+            projects = []
+            for x in userProjects.find({}, {"_id": 0, "name" : 1, "hardware1" : 1, "hardware2" : 1}):
+                projects.append(x)
+            message = {"message": "partial success", "projects": projects, "code": 200}
+            return jsonify(message)
         
 
 
