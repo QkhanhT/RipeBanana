@@ -1,12 +1,14 @@
 // Projects.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useRef } from 'react';
 import MyButton from './Button';
 import './Projects.css'; // Import the CSS file
 import {useNavigate } from "react-router-dom";
 
 function Projects(props) {
-  var { projects, sets } = props;
+  const { initialProjects, initialSets } = props;
+  const [projects, setProjects] = useState(initialProjects);
+  const [sets, setSets] = useState(initialSets);
   const [valueHW1, setValueHW1] = useState('');
   const [valueHW2, setValueHW2] = useState('');
   const [joined, setjoined] = useState(false);
@@ -17,7 +19,6 @@ function Projects(props) {
   const handleValueHW2 = (event) => {
     setValueHW2(event.target.value);
   };
-  const navigate = useNavigate();
 
   const handleCheckInHW1 = async(projectId, e) => {
     //if (joined == true){;
@@ -34,7 +35,8 @@ function Projects(props) {
         .then(function(data){
             data = JSON.parse(data);
             if(data.code === 200){
-                projects = data.projects
+                setProjects(data.projects)
+                // setSets(data.sets)
             }
         });
         console.log(`Checking in ${valueHW1} HW1 items for Project ${projectId}`);
@@ -56,7 +58,8 @@ function Projects(props) {
         .then(function(data){
             data = JSON.parse(data);
             if(data.code === 200){
-                projects = data.projects
+              setProjects(data.projects)
+              // setSets(data.sets)
             }
         });
         console.log(`Checking out ${valueHW1} HW1 items for Project ${projectId}`);
@@ -78,7 +81,8 @@ function Projects(props) {
         .then(function(data){
             data = JSON.parse(data);
             if(data.code === 200){
-                projects = data.projects
+              setProjects(data.projects)
+              // setSets(data.sets)
             }
         });
         console.log(`Checking in ${valueHW2} HW2 items for Project ${projectId}`);
@@ -100,16 +104,19 @@ function Projects(props) {
         .then(function(data){
             data = JSON.parse(data);
             if(data.code === 200){
-                projects = data.projects
+              setProjects(data.projects)
+              // setSets(data.sets)
             }
         });
         console.log(`Checking out ${valueHW2} HW2 items for Project ${projectId}`);
     //}
   };
 
-  // useEffect(() => {
-  //   handleCheckOutHW2();
-  // },[]);  
+  useEffect(() => {
+    // Update projectsData when the 'projects' prop changes
+    setProjects(projects);
+    setSets(sets);
+  }, [projects, sets]);  
 
   return (
     <div>

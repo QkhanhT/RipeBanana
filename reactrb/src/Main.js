@@ -5,8 +5,8 @@ import './Main.css'
 import { useParams, useNavigate } from "react-router-dom";
 import logo from './ripebanana-removebg.png';
 import Dashboard from './Dashboard';
-export var projects = [];
-export var sets = [];
+// export var projects = [];
+// export var sets = [];
 
 
 function Main() {
@@ -40,10 +40,14 @@ function Main() {
             data = JSON.parse(data);
             if(data.code === 200){
                 setError(false)
-                projects = data.projects
-                sets = data.sets
-                console.log(sets)
-                navigate('/dashboard')
+                console.log(data.projects)
+                console.log(data.sets)
+                navigate('/dashboard', {
+                    state: {
+                        projectList : data.projects,
+                        setsList: data.sets
+                    }
+                })
             }
             else {
                 if(data.message == "incorrect_password"){

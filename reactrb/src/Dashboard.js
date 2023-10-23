@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
-import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Projects from './Projects';
-import Hardware from './Hardware';
 import './Dashboard.css'; // Import your application-specific CSS here
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Main from './Main';
-import MyButton from './Button';
-import {useParams} from "react-router-dom"
-import { projects } from './Main.js';
-import { sets } from './Main.js';
 
 function Dashboard() {
+  const location = useLocation();
+  const passedProjects = location.state.projectList;
+  const passedSets = location.state.setsList;
 
   return (
     <div className='Dashboard'>
@@ -25,8 +21,8 @@ function Dashboard() {
           <Grid container spacing={2}>
             <Grid item xs={12} md={5}>
             <Projects
-                projects={projects}
-                sets={sets}
+                initialProjects={passedProjects}
+                initialSets={passedSets}
               />
             </Grid>
           </Grid>
