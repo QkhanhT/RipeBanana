@@ -217,7 +217,49 @@ def checkoutHW2():
                 projects.append(x)
             message = {"message": "partial success", "projects": projects, "code": 200}
             return jsonify(message)
+
+@app.route("/dashboard/create", methods = ['POST', 'GET'])
+def createProject():
+    if request.method == 'POST':
+        data = request.get_json
+        projectName = data.get('projectName')
+        projectID = data.get('projectID')
+        description = data.get('description')
         
+        existing_project = userProjects.find_one({'name' : projectName})
+
+        if existing_project is None:
+            project = {'name' : projectName, 'projectID' : projectID, 'description' : description, 'hardware1' : 0, 'hardware2' : 0}
+            userProjects.insert_one(project)
+            message = {"message": "project_created", "code": 200}
+            return jsonify(message)
+        else:
+            print('The project already exists!')
+            message = {"message": projectName, "code": 400}
+            return jsonify(message)
+
+@app.route("/dashboard/join", methods = ['POST', 'GET'])
+def joinProject():
+    if request.method == 'POST':
+        data = request.get_json
+        projectName = data.get('projectName')
+        projectID = data.get('projectID')
+
+        existing_project = userProjects.find_one({'name' : projectName})
+
+        if existing_project is None:
+            print("Project doesn't exist!")
+            message = {"message": "project_not_found", "code": 400}
+            return jsonify(message)
+        else:
+            if projectID == existing_project['projectID']:
+                print("Successfully joined!")
+                message = {"message": "success", "code" : 200}
+                return jsonify(message)
+            else:
+                print("Wrong projectID!")
+                message = {"message" : "wrong_projectID", "code" : 400}
+                return jsonify(message)
 
 
 if __name__ == "__main__":
