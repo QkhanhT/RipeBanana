@@ -222,9 +222,9 @@ def checkoutHW2():
 def createProject():
     if request.method == 'POST':
         data = request.get_json
-        projectName = data.get('projectName')
-        projectID = data.get('projectID')
-        description = data.get('description')
+        projectName = data.get('inputName')
+        projectID = data.get('inputProjID')
+        description = data.get('inputDesc')
         
         existing_project = userProjects.find_one({'name' : projectName})
 
@@ -242,8 +242,8 @@ def createProject():
 def joinProject():
     if request.method == 'POST':
         data = request.get_json
-        projectName = data.get('projectName')
-        projectID = data.get('projectID')
+        projectName = data.get('inputName')
+        projectID = data.get('existProjID')
 
         existing_project = userProjects.find_one({'name' : projectName})
 
