@@ -5,6 +5,7 @@ import './Dashboard.css'; // Import your application-specific CSS here
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import ProjSignin from './ProjSignIn';
 
 function Dashboard() {
   const location = useLocation();
@@ -24,6 +25,7 @@ function Dashboard() {
                 initialProjects={passedProjects}
                 initialSets={passedSets}
               />
+              <ProjSignin></ProjSignin>
             </Grid>
           </Grid>
         </center>

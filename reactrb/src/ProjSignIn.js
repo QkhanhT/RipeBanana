@@ -8,8 +8,6 @@ function ProjSignin() {
     const [existProjID, setExistID] = useState('');
     const [error, setError] = useState(false);
     const [errMessage, setErrMessage] = useState('');
-    const {state} = useLocation();
-    const {list} = state;
     const handleNameChange = (event) => {
         setName(event.target.value);
     };
@@ -41,8 +39,11 @@ function ProjSignin() {
             data = JSON.parse(data)
             if(data.code == 400){
                 setErrMessage("The project with " + inputProjID + " already exists!")
+                setError(true)
             }
-            setError(true)
+            else{
+                setError(false)
+            }
         });
     };
 
@@ -67,21 +68,13 @@ function ProjSignin() {
                 else{
                     setErrMessage(existProjID + " is incorrect!")
                 }
+                setError(true)
+            }
+            else{
+                setError(false)
             }
         });
     };
-
-    const projectDisp = () => {
-        return Object.keys(list).map((obj, i) => {
-            return (
-                <div>
-                    name is: {list[obj].name} ;
-                    hardware1 is: {list[obj].hardware1};
-                    hardware2 is: {list[obj].hardware2}
-                </div>
-            )
-        })
-    } 
 
     const errorMessage = () => {
         return(
@@ -143,9 +136,6 @@ function ProjSignin() {
                         <button type="submit">Sign In</button>
                     </div>
                 </form>
-            </div>
-            <div>
-                {projectDisp()}
             </div>
             <div>
                 {errorMessage()}

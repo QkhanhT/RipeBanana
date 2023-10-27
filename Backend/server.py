@@ -221,12 +221,12 @@ def checkoutHW2():
 @app.route("/dashboard/create", methods = ['POST', 'GET'])
 def createProject():
     if request.method == 'POST':
-        data = request.get_json
+        data = request.get_json()
         projectName = data.get('inputName')
         projectID = data.get('inputProjID')
         description = data.get('inputDesc')
         
-        existing_project = userProjects.find_one({'name' : projectName})
+        existing_project = userProjects.find_one({'projectID' : projectID})
 
         if existing_project is None:
             project = {'name' : projectName, 'projectID' : projectID, 'description' : description, 'hardware1' : 0, 'hardware2' : 0}
@@ -241,11 +241,9 @@ def createProject():
 @app.route("/dashboard/join", methods = ['POST', 'GET'])
 def joinProject():
     if request.method == 'POST':
-        data = request.get_json
-        projectName = data.get('inputName')
+        data = request.get_json()
         projectID = data.get('existProjID')
-
-        existing_project = userProjects.find_one({'name' : projectName})
+        existing_project = userProjects.find_one({'projectID' : projectID})
 
         if existing_project is None:
             print("Project doesn't exist!")
