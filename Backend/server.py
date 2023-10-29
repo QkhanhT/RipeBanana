@@ -231,7 +231,15 @@ def createProject():
         if existing_project is None:
             project = {'name' : projectName, 'projectID' : projectID, 'description' : description, 'hardware1' : 0, 'hardware2' : 0}
             userProjects.insert_one(project)
-            message = {"message": "project_created", "code": 200}
+            projects = []
+            sets = []
+            for x in userProjects.find({}, {"_id": 0, "name" : 1, "hardware1" : 1, "hardware2" : 1}):
+                projects.append(x)
+            for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "capacity" : 1}):
+                sets.append(x)
+            print(projects)
+            print(sets)
+            message = {"message": "project_created", "projects": projects, "sets": sets, "code": 200}
             return jsonify(message)
         else:
             print('The project already exists!')
@@ -252,7 +260,7 @@ def joinProject():
         else:
             if projectID == existing_project['projectID']:
                 print("Successfully joined!")
-                message = {"message": "success", "code" : 200}
+                message = {"message": "success", "code": 200}
                 return jsonify(message)
             else:
                 print("Wrong projectID!")

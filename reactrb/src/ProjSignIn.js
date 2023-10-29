@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 
 function ProjSignin() {
     const [inputName, setName] = useState('');
@@ -8,6 +8,8 @@ function ProjSignin() {
     const [existProjID, setExistID] = useState('');
     const [error, setError] = useState(false);
     const [errMessage, setErrMessage] = useState('');
+    const navigate = useNavigate();
+    
     const handleNameChange = (event) => {
         setName(event.target.value);
     };
@@ -43,6 +45,14 @@ function ProjSignin() {
             }
             else{
                 setError(false)
+                console.log(data.projects)
+                console.log(data.sets)
+                navigate('/dashboard', {
+                    state: {
+                        projectList : data.projects,
+                        setsList: data.sets
+                    }
+                })
             }
         });
     };

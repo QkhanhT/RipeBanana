@@ -9,8 +9,8 @@ import ProjSignin from './ProjSignIn';
 
 function Dashboard() {
   const location = useLocation();
-  const passedProjects = location.state.projectList;
-  const passedSets = location.state.setsList;
+  var passedProjects = location.state.projectList;
+  var passedSets = location.state.setsList;
 
   return (
     <div className='Dashboard'>
