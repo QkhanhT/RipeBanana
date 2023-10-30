@@ -118,6 +118,29 @@ function Projects(props) {
     setSets(sets);
   }, [projects, sets]);  
 
+  //Code for polling, update project info every x seconds
+  useEffect(() => {
+    const updateInterval = setInterval(() => {
+      //Fetch from frontend
+      fetch("dashboard/projects")
+      //Parse JSON response
+      .then((response) => response.json())
+      .then((data) => {
+        //Update projects state
+        setProjects(data.projects); 
+        //Update sets state
+        setSets(data.sets); 
+      })
+      //Error handling
+      .catch((error) => { 
+        console.error("Failed to fetch projects and sets:", error); 
+      });
+    }, 5000);
+
+    return () => clearInterval(updateInterval); 
+    }, []);
+    //End of polling
+
   return (
     <div>
             <h2>Projects</h2>

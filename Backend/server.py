@@ -266,6 +266,20 @@ def joinProject():
                 print("Wrong projectID!")
                 message = {"message" : "wrong_projectID", "code" : 400}
                 return jsonify(message)
+            
+#New endpoint for polling
+@app.route("/dashboard/projects", methods=['GET'])
+def get_projects_and_sets():
+    #Gives full list of projects and sets
+    projects = []
+    sets = []
+    for x in userProjects.find({}, {"_id": 0, "name" : 1, "hardware1" : 1, "hardware2" : 1}):
+        projects.append(x)
+    for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "capacity" : 1}):
+        sets.append(x)
+    print(sets)
+    message = {"message": "success", "projects": projects, "sets": sets, "code": 200}
+    return jsonify(message)
 
 
 if __name__ == "__main__":
