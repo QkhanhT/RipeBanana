@@ -49,7 +49,7 @@ function ProjSignin() {
                 console.log(data.sets)
                 navigate('/dashboard', {
                     state: {
-                        projectList : data.projects,
+                        project : data.projects,
                         setsList: data.sets
                     }
                 })

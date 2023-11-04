@@ -234,9 +234,10 @@ def createProject():
             sets = []
             for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "capacity" : 1}):
                 sets.append(x)
-            print(existing_project)
+            sendproject = {'name' : project['name'], 'projectID' : project['projectID'], 'description' : project['description'], 'hardware1' : project['hardware1'], 'hardware2' : project['hardware2']}
             print(sets)
-            message = {"message": "project_created", "projects": project, "sets": sets, "code": 200}
+            print(sendproject)
+            message = {"message": "project_created", "projects": sendproject, "sets": sets, "code": 200}
             return jsonify(message)
         else:
             print('The project already exists!')
