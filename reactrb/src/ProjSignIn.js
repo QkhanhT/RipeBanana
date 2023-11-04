@@ -82,6 +82,12 @@ function ProjSignin() {
             }
             else{
                 setError(false)
+                navigate('/dashboard', {
+                    state: {
+                        project : data.project,
+                        setsList: data.sets
+                    }
+                })
             }
         });
     };

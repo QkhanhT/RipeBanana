@@ -53,14 +53,14 @@ def login():
         if fetched_user:
             if fetched_user['password']== encrypt(password, 5, -1):
                 print("Login Success")
-                projects = []
-                sets = []
-                for x in userProjects.find({}, {"_id": 0, "name" : 1, "hardware1" : 1, "hardware2" : 1}):
-                    projects.append(x)
-                for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "capacity" : 1}):
-                    sets.append(x)
-                print(sets)
-                message = {"message": "success", "projects": projects, "sets": sets, "code": 200}
+                # projects = []
+                # sets = []
+                # for x in userProjects.find({}, {"_id": 0, "name" : 1, "hardware1" : 1, "hardware2" : 1}):
+                #     projects.append(x)
+                # for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "capacity" : 1}):
+                #     sets.append(x)
+                # print(sets)
+                message = {"message": "success", "code": 200}
                 return jsonify(message)
             else:
                 print("Incorrect Password")
@@ -231,15 +231,12 @@ def createProject():
         if existing_project is None:
             project = {'name' : projectName, 'projectID' : projectID, 'description' : description, 'hardware1' : 0, 'hardware2' : 0}
             userProjects.insert_one(project)
-            projects = []
             sets = []
-            for x in userProjects.find({}, {"_id": 0, "name" : 1, "hardware1" : 1, "hardware2" : 1}):
-                projects.append(x)
             for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "capacity" : 1}):
                 sets.append(x)
-            print(projects)
+            print(existing_project)
             print(sets)
-            message = {"message": "project_created", "projects": projects, "sets": sets, "code": 200}
+            message = {"message": "project_created", "projects": project, "sets": sets, "code": 200}
             return jsonify(message)
         else:
             print('The project already exists!')
@@ -251,7 +248,12 @@ def joinProject():
     if request.method == 'POST':
         data = request.get_json()
         projectID = data.get('existProjID')
+        sets = []
         existing_project = userProjects.find_one({'projectID' : projectID})
+        project = {'name' : existing_project['name'], 'projectID' : existing_project['projectID'], 'description' : existing_project['description'], 'hardware1' : existing_project['hardware1'], 'hardware2' : existing_project['hardware2']}
+        print(project)
+        for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "capacity" : 1}):
+             sets.append(x)
 
         if existing_project is None:
             print("Project doesn't exist!")
@@ -260,7 +262,7 @@ def joinProject():
         else:
             if projectID == existing_project['projectID']:
                 print("Successfully joined!")
-                message = {"message": "success", "code": 200}
+                message = {"message": "success", "project": project, "sets": sets, "code": 200}
                 return jsonify(message)
             else:
                 print("Wrong projectID!")

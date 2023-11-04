@@ -42,11 +42,11 @@ function Main() {
                 setError(false)
                 console.log(data.projects)
                 console.log(data.sets)
-                navigate('/dashboard', {
-                    state: {
-                        projectList : data.projects,
-                        setsList: data.sets
-                    }
+                navigate('/projsignin', {
+                    // state: {
+                    //     projectList : data.projects,
+                    //     setsList: data.sets
+                    // }
                 })
             }
             else {

@@ -12,6 +12,7 @@ function Projects(props) {
   const [valueHW1, setValueHW1] = useState('');
   const [valueHW2, setValueHW2] = useState('');
   const [joined, setjoined] = useState(false);
+  const navigate = useNavigate();
 
   const handleValueHW1 = (event) => {
     setValueHW1(event.target.value);
@@ -121,11 +122,9 @@ function Projects(props) {
   return (
     <div>
             <h2>Projects</h2>
-            {projects.map((project) => (
-                <div key={project['name']} className="project-container"> 
-                      <h3>{project['name']}</h3>
+            <h3>{projects['name']}</h3>
                       <div>
-                        <p>Hardware Set 1 - {project['hardware1']}/{sets[0]['capacity']}</p>
+                        <p>Hardware Set 1 - {projects['hardware1']}/{sets[0]['capacity']}</p>
                         {/* <div > */}
                           <input
                               type="text"
@@ -134,12 +133,12 @@ function Projects(props) {
                               value={valueHW1}
                               onChange={handleValueHW1}
                           />
-                          <MyButton label="Check In" onClick={() => handleCheckInHW1(project['name'])} />
-                          <MyButton label="Check Out" onClick={() => handleCheckOutHW1(project['name'])} />
+                          <MyButton label="Check In" onClick={() => handleCheckInHW1(projects['name'])} />
+                          <MyButton label="Check Out" onClick={() => handleCheckOutHW1(projects['name'])} />
                         {/* </div> */}
                       </div>
                       <div>
-                        <p>Hardware Set 2 - {project['hardware2']}/{sets[1]['capacity']}</p>
+                        <p>Hardware Set 2 - {projects['hardware2']}/{sets[1]['capacity']}</p>
                           <input
                               type="text"
                               id="valueHW2"
@@ -147,15 +146,18 @@ function Projects(props) {
                               value={valueHW2}
                               onChange={handleValueHW2}
                           />
-                          <MyButton label="Check In" onClick={() => handleCheckInHW2(project['name'])} />
-                          <MyButton label="Check Out" onClick={() => handleCheckOutHW2(project['name'])} />
+                          <MyButton label="Check In" onClick={() => handleCheckInHW2(projects['name'])} />
+                          <MyButton label="Check Out" onClick={() => handleCheckOutHW2(projects['name'])} />
                       </div>
-                </div>
-            ))}
+                      <div>
+                        <MyButton label="<--" onClick={() => navigate('/projsignin')}></MyButton>
+                      </div>
+                      <div>
+                        <MyButton label="Log Off" onClick={() => navigate('/')}></MyButton>
+                      </div>
+                      
     </div>
   );
 }
-
-// () => handleCheckOutHW2(project['name'])}
 
 export default Projects;

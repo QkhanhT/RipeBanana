@@ -6,6 +6,7 @@ import Main from './Main';
 import SignUp from './SignUp';
 import Dashboard from './Dashboard';
 import PlaceHolder from './PlaceHolder';
+import ProjSignin from './ProjSignIn';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element = {<Main/>}></Route>
         <Route path="signup" element = {<SignUp/>}></Route>
+        <Route path="projsignin" element = {<ProjSignin/>}></Route>
         <Route path="dashboard" element = {<Dashboard/>}></Route>
       </Routes>
     </div>

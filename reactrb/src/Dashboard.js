@@ -9,7 +9,7 @@ import ProjSignin from './ProjSignIn';
 
 function Dashboard() {
   const location = useLocation();
-  var passedProjects = location.state.projectList;
+  var passedProjects = location.state.project;
   var passedSets = location.state.setsList;
 
   return (
@@ -25,7 +25,6 @@ function Dashboard() {
                 initialProjects={passedProjects}
                 initialSets={passedSets}
               />
-              <ProjSignin></ProjSignin>
             </Grid>
           </Grid>
         </center>
