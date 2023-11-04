@@ -40,8 +40,6 @@ function Main() {
             data = JSON.parse(data);
             if(data.code === 200){
                 setError(false)
-                console.log(data.projects)
-                console.log(data.sets)
                 navigate('/projsignin', {
                     // state: {
                     //     projectList : data.projects,

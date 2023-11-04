@@ -45,11 +45,9 @@ function ProjSignin() {
             }
             else{
                 setError(false)
-                console.log(data.projects)
-                console.log(data.sets)
                 navigate('/dashboard', {
                     state: {
-                        project : data.projects,
+                        project : data.project,
                         setsList: data.sets
                     }
                 })
