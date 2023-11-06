@@ -48,12 +48,12 @@ function Projects(props) {
             //Partial success
             else if(data.code === 300){
               setProjects(data.project)
-              setErrMessage("Checkin complete. Can't give full amount for HW2")
+              setErrMessage("Checkin complete. Can't give full amount for HW1")
               setError(true)
             }
             //Fail
             else if(data.code === 400){
-              setErrMessage("Checkin failed for HW2")
+              setErrMessage("Checkin failed for HW1")
               setError(true)
             }
         });

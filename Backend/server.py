@@ -262,8 +262,6 @@ def joinProject():
         projectID = data.get('existProjID')
         sets = []
         existing_project = userProjects.find_one({'projectID' : projectID})
-        project = {'name' : existing_project['name'], 'projectID' : existing_project['projectID'], 'description' : existing_project['description'], 'hardware1' : existing_project['hardware1'], 'hardware2' : existing_project['hardware2']}
-        print(project)
         for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "capacity" : 1}):
              sets.append(x)
 
@@ -272,6 +270,8 @@ def joinProject():
             message = {"message": "project_not_found", "code": 400}
             return jsonify(message)
         else:
+            project = {'name' : existing_project['name'], 'projectID' : existing_project['projectID'], 'description' : existing_project['description'], 'hardware1' : existing_project['hardware1'], 'hardware2' : existing_project['hardware2']}
+            print(project)
             if projectID == existing_project['projectID']:
                 print("Successfully joined!")
                 message = {"message": "success", "project": project, "sets": sets, "code": 200}
