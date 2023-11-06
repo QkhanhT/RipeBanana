@@ -316,6 +316,8 @@ def joinProject():
             message = {"message": "project_not_found", "code": 400}
             return jsonify(message)
         else:
+            project = {'name' : existing_project['name'], 'projectID' : existing_project['projectID'], 'description' : existing_project['description'], 'hardware1' : existing_project['hardware1'], 'hardware2' : existing_project['hardware2']}
+            print(project)
             if projectID == existing_project['projectID']:
                 print("Successfully joined!")
                 print(sets)
