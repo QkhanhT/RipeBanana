@@ -9,7 +9,7 @@ function Projects(props) {
   const { initialProjects, initialSets } = props;
   const [project, setProjects] = useState(initialProjects);
   const [sets, setSets] = useState(initialSets);
-  const [valueHW1, setValueHW1] = useState('');
+  const [valueHW1, setValueHW1] = useState(''); //TODO: Make sure values are numbers within the handlers
   const [valueHW2, setValueHW2] = useState('');
   const [joined, setjoined] = useState(false);
   const [error, setError] = useState(false); //Handler for error variable
@@ -48,7 +48,7 @@ function Projects(props) {
             //Partial success
             else if(data.code === 300){
               setProjects(data.project)
-              setErrMessage("Checkin complete. Can't give full amount for HW1")
+              setErrMessage("Checkin complete. Can't check in full amount for HW1")
               setError(true)
             }
             //Fail
@@ -116,7 +116,7 @@ function Projects(props) {
             }
             else if(data.code === 300){
               setProjects(data.project)
-              setErrMessage("Checkin complete. Can't give full amount for HW2")
+              setErrMessage("Checkin complete. Can't check in full amount for HW2")
               setError(true)
             }
             else if(data.code === 400){
