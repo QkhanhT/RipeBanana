@@ -44,6 +44,8 @@ function Projects(props) {
                 setProjects(data.project)
                 // setSets(data.sets)
                 setError(false)
+                setSets(data.sets)
+                // setSets(data.setss)
             }
             //Partial success
             else if(data.code === 300){
@@ -55,6 +57,7 @@ function Projects(props) {
             else if(data.code === 400){
               setErrMessage("Checkin failed for HW1")
               setError(true)
+              setSets(data.sets)
             }
         });
         console.log(`Checking in ${valueHW1} HW1 items for Project ${name}`);
@@ -81,13 +84,17 @@ function Projects(props) {
               setError(false)
             }
             else if(data.code === 300){
-              setProjects(data.project)
               setErrMessage("Checkout complete. Can't give full amount for HW1")
               setError(true)
+              setProjects(data.project)
+              setSets(data.sets)
             }
             else if(data.code === 400){
               setErrMessage("Checkout failed for HW1")
               setError(true)
+              setSets(data.sets)
+              console.log(data.sets)
+              // setSets(data.setss)
             }
         });
         console.log(`Checking out ${valueHW1} HW1 items for Project ${name}`);
@@ -116,12 +123,15 @@ function Projects(props) {
             }
             else if(data.code === 300){
               setProjects(data.project)
+              setSets(data.sets)
               setErrMessage("Checkin complete. Can't check in full amount for HW2")
               setError(true)
             }
             else if(data.code === 400){
               setErrMessage("Checkin failed for HW2")
               setError(true)
+              setSets(data.sets)
+              // setSets(data.setss)
             }
         });
         console.log(`Checking in ${valueHW2} HW2 items for Project ${name}`);
@@ -144,7 +154,8 @@ function Projects(props) {
             data = JSON.parse(data);
             if(data.code === 200){
               setProjects(data.project)
-              // setSets(data.sets)
+              setSets(data.sets)
+              // setSets(data.setss)
             }
             else if(data.code === 300){
               setProjects(data.project)
@@ -154,6 +165,7 @@ function Projects(props) {
             else if(data.code === 400){
               setErrMessage("Checkout failed for HW2")
               setError(true)
+              setSets(data.sets)
             }
         });
         console.log(`Checking out ${valueHW2} HW2 items for Project ${name}`);
@@ -183,7 +195,8 @@ function Projects(props) {
             <h2>Project</h2>
             <h3>{project['name']}</h3>
                       <div>
-                        <p>Hardware Set 1 - {project['hardware1']}/{sets[0]['capacity']}</p>
+                        <p>Hardware Set 1</p>
+                        <p>Availability: {sets[0]['availability']}/{sets[0]['capacity']}  Checked Out: {project['hardware1']}</p>
                         {/* <div > */}
                           <input
                               type="text"
@@ -197,7 +210,8 @@ function Projects(props) {
                         {/* </div> */}
                       </div>
                       <div>
-                        <p>Hardware Set 2 - {project['hardware2']}/{sets[1]['capacity']}</p>
+                      <p>Hardware Set 2</p>
+                        <p>Availability: {sets[1]['availability']}/{sets[1]['capacity']}  Checked Out: {project['hardware2']}</p>
                           <input
                               type="text"
                               id="valueHW2"
