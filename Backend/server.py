@@ -77,6 +77,7 @@ def checkinHW1():
 
         availability = int(set['availability'])
         capacity = int(set['capacity'])
+    
         if (int(project['hardware1']) == 0):
             print("Checkin unsuccessful, you do not have enough hardware to checkin")
             message = {"message": "failed", "code": 400}
@@ -89,7 +90,11 @@ def checkinHW1():
             project = userProjects.find_one({'name' : data.get('name')})
             project = {'name' : project['name'], 'projectID' : project['projectID'], 'description' : project['description'], 'hardware1' : project['hardware1'], 'hardware2' : project['hardware2']}
 
-            message = {"message": "success", "project": project, "code": 200}
+            sets = []
+            for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "availability": 1, "capacity" : 1}):
+                sets.append(x)
+                   
+            message = {"message": "success", "project": project, "sets": sets, "code": 200}
             return jsonify(message)
         elif (availability + checkInValue > capacity and int(project['hardware1']) - checkInValue >= 0): #If enough hardware to checkin but exceeds capacity
             hardwareSets.update_one({'name' : 'HardwareSet 1'}, {"$set": {'availability' : capacity}})
@@ -99,7 +104,11 @@ def checkinHW1():
             project = userProjects.find_one({'name' : data.get('name')})
             project = {'name' : project['name'], 'projectID' : project['projectID'], 'description' : project['description'], 'hardware1' : project['hardware1'], 'hardware2' : project['hardware2']}
 
-            message = {"message": "partial success", "project": project, "code": 300}
+            sets = []
+            for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "availability": 1, "capacity" : 1}):
+                sets.append(x)
+
+            message = {"message": "partial success", "project": project, "sets": sets, "code": 300}
             return jsonify(message)
         elif (int(project['hardware1']) - checkInValue < 0): #If not enough hardware to checkin
             hardwareSets.update_one({'name' : 'HardwareSet 1'}, {"$set": {'availability' : availability + int(project['hardware1'])}})
@@ -109,7 +118,11 @@ def checkinHW1():
             project = userProjects.find_one({'name' : data.get('name')})
             project = {'name' : project['name'], 'projectID' : project['projectID'], 'description' : project['description'], 'hardware1' : project['hardware1'], 'hardware2' : project['hardware2']}
 
-            message = {"message": "partial success", "project": project, "code": 300}
+            sets = []
+            for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "availability": 1, "capacity" : 1}):
+                sets.append(x)
+
+            message = {"message": "partial success", "project": project, "sets": sets, "code": 300}
             return jsonify(message)
 
 
@@ -120,6 +133,7 @@ def checkoutHW1():
         data = request.get_json()
         checkOutAmount = int(data.get('valueHW1'))
         set = hardwareSets.find_one({'name' : 'HardwareSet 1'})
+        print(set)
         project = userProjects.find_one({'name' : data.get('name')})
 
         availability = int(set['availability'])
@@ -136,7 +150,11 @@ def checkoutHW1():
             project = userProjects.find_one({'name' : data.get('name')})
             project = {'name' : project['name'], 'projectID' : project['projectID'], 'description' : project['description'], 'hardware1' : project['hardware1'], 'hardware2' : project['hardware2']}
 
-            message = {"message": "success", "project": project, "code": 200}
+            sets = []
+            for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "availability": 1, "capacity" : 1}):
+                sets.append(x)
+
+            message = {"message": "success", "project": project, "sets": sets, "code": 200}
             return jsonify(message)
         else:
             hardwareSets.update_one({'name' : 'HardwareSet 1'}, {"$set": {'availability' : 0}})
@@ -146,7 +164,11 @@ def checkoutHW1():
             project = userProjects.find_one({'name' : data.get('name')})
             project = {'name' : project['name'], 'projectID' : project['projectID'], 'description' : project['description'], 'hardware1' : project['hardware1'], 'hardware2' : project['hardware2']}
 
-            message = {"message": "partial success", "project": project, "code": 300}
+            sets = []
+            for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "availability": 1, "capacity" : 1}):
+                sets.append(x)
+
+            message = {"message": "partial success", "project": project, "sets": sets, "code": 300}
             return jsonify(message)
 
 @app.route("/dashboard/checkin/hw2", methods = ['POST', 'GET'])          
@@ -172,7 +194,11 @@ def checkinHW2():
             project = userProjects.find_one({'name' : data.get('name')})
             project = {'name' : project['name'], 'projectID' : project['projectID'], 'description' : project['description'], 'hardware1' : project['hardware1'], 'hardware2' : project['hardware2']}
 
-            message = {"message": "success", "project": project, "code": 200}
+            sets = []
+            for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "availability": 1, "capacity" : 1}):
+                sets.append(x)
+
+            message = {"message": "success", "project": project, "sets": sets, "code": 200}
             return jsonify(message)
         elif (availability + checkInValue > capacity and int(project['hardware2']) - checkInValue >= 0): #If enough hardware to checkin but exceeds capacity
             hardwareSets.update_one({'name' : 'HardwareSet 2'}, {"$set": {'availability' : capacity}})
@@ -182,7 +208,11 @@ def checkinHW2():
             project = userProjects.find_one({'name' : data.get('name')})
             project = {'name' : project['name'], 'projectID' : project['projectID'], 'description' : project['description'], 'hardware1' : project['hardware1'], 'hardware2' : project['hardware2']}
 
-            message = {"message": "partial success", "project": project, "code": 300}
+            sets = []
+            for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "availability": 1, "capacity" : 1}):
+                sets.append(x)
+
+            message = {"message": "partial success", "project": project, "sets": sets, "code": 300}
             return jsonify(message)
         elif (int(project['hardware2']) - checkInValue < 0): #If not enough hardware to checkin
             hardwareSets.update_one({'name' : 'HardwareSet 2'}, {"$set": {'availability' : availability + int(project['hardware2'])}})
@@ -192,7 +222,11 @@ def checkinHW2():
             project = userProjects.find_one({'name' : data.get('name')})
             project = {'name' : project['name'], 'projectID' : project['projectID'], 'description' : project['description'], 'hardware1' : project['hardware1'], 'hardware2' : project['hardware2']}
 
-            message = {"message": "partial success", "project": project, "code": 300}
+            sets = []
+            for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "availability": 1, "capacity" : 1}):
+                sets.append(x)
+
+            message = {"message": "partial success", "project": project, "sets": sets, "code": 300}
             return jsonify(message)
 
 
@@ -217,7 +251,12 @@ def checkoutHW2():
             
             project = userProjects.find_one({'name' : data.get('name')})
             project = {'name' : project['name'], 'projectID' : project['projectID'], 'description' : project['description'], 'hardware1' : project['hardware1'], 'hardware2' : project['hardware2']}
-            message = {"message": "success", "project": project, "code": 200}
+            
+            sets = []
+            for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "availability": 1, "capacity" : 1}):
+                sets.append(x)
+
+            message = {"message": "success", "project": project, "sets": sets, "code": 200}
             return jsonify(message)
         else:
             hardwareSets.update_one({'name' : 'HardwareSet 2'}, {"$set": {'availability' : 0}})
@@ -226,7 +265,12 @@ def checkoutHW2():
             
             project = userProjects.find_one({'name' : data.get('name')})
             project = {'name' : project['name'], 'projectID' : project['projectID'], 'description' : project['description'], 'hardware1' : project['hardware1'], 'hardware2' : project['hardware2']}
-            message = {"message": "partial success", "project": project, "code": 300}
+            
+            sets = []
+            for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "availability": 1, "capacity" : 1}):
+                sets.append(x)
+
+            message = {"message": "partial success", "project": project, "sets": sets, "code": 300}
             return jsonify(message)
 
 @app.route("/dashboard/create", methods = ['POST', 'GET'])
@@ -243,7 +287,7 @@ def createProject():
             project = {'name' : projectName, 'projectID' : projectID, 'description' : description, 'hardware1' : 0, 'hardware2' : 0}
             userProjects.insert_one(project)
             sets = []
-            for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "capacity" : 1}):
+            for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "availability": 1, "capacity" : 1}):
                 sets.append(x)
             sendproject = {'name' : project['name'], 'projectID' : project['projectID'], 'description' : project['description'], 'hardware1' : project['hardware1'], 'hardware2' : project['hardware2']}
             print(sets)
@@ -264,7 +308,7 @@ def joinProject():
         existing_project = userProjects.find_one({'projectID' : projectID})
         project = {'name' : existing_project['name'], 'projectID' : existing_project['projectID'], 'description' : existing_project['description'], 'hardware1' : existing_project['hardware1'], 'hardware2' : existing_project['hardware2']}
         print(project)
-        for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "capacity" : 1}):
+        for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "availability": 1, "capacity" : 1}):
              sets.append(x)
 
         if existing_project is None:
@@ -274,6 +318,7 @@ def joinProject():
         else:
             if projectID == existing_project['projectID']:
                 print("Successfully joined!")
+                print(sets)
                 message = {"message": "success", "project": project, "sets": sets, "code": 200}
                 return jsonify(message)
             else:
