@@ -42,16 +42,14 @@ function Projects(props) {
             //Success
             if(data.code === 200){
                 setProjects(data.project)
-                // setSets(data.sets)
                 setError(false)
                 setSets(data.sets)
-                // setSets(data.setss)
             }
             //Partial success
             else if(data.code === 300){
               setProjects(data.project)
               setSets(data.sets)
-              setErrMessage("Checkin complete. Can't check in full amount for HW1")
+              setErrMessage("Checkin complete, however you don't have enough HW1 items to check in full amount")
               setError(true)
             }
             //Fail
@@ -80,11 +78,12 @@ function Projects(props) {
             data = JSON.parse(data);
             if(data.code === 200){
               setProjects(data.project)
-              // setSets(data.sets)
+              setSets(data.sets)
+              console.log(data.project)
               setError(false)
             }
             else if(data.code === 300){
-              setErrMessage("Checkout complete. Can't give full amount for HW1")
+              setErrMessage("Checkout complete, however not enough HW1 items to check out full amount")
               setError(true)
               setProjects(data.project)
               setSets(data.sets)
@@ -115,13 +114,13 @@ function Projects(props) {
             data = JSON.parse(data);
             if(data.code === 200){
               setProjects(data.project)
-              // setSets(data.sets)
+              setSets(data.sets)
               setError(false)
             }
             else if(data.code === 300){
               setProjects(data.project)
               setSets(data.sets)
-              setErrMessage("Checkin complete. Can't check in full amount for HW2")
+              setErrMessage("Checkin complete, however you don't have enough HW2 items to check in full amount")
               setError(true)
             }
             else if(data.code === 400){
@@ -150,12 +149,12 @@ function Projects(props) {
             if(data.code === 200){
               setProjects(data.project)
               setSets(data.sets)
-              // setSets(data.setss)
+              setError(false)
             }
             else if(data.code === 300){
               setProjects(data.project)
               setSets(data.sets)
-              setErrMessage("Checkout complete. Can't give full amount for HW2")
+              setErrMessage("Checkout complete, however not enough HW2 items to check out full amount")
               setError(true)
             }
             else if(data.code === 400){

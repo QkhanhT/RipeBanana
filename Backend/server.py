@@ -77,11 +77,12 @@ def checkinHW1():
 
         availability = int(set['availability'])
         capacity = int(set['capacity'])
-    
+        print(project)
         if (int(project['hardware1']) == 0):
-            print("Checkin unsuccessful, you do not have enough hardware to checkin")
+            print("Checkin unsuccessful, you do not have hardware to checkin")
             message = {"message": "failed", "code": 400}
-        if(availability + checkInValue <= capacity and int(project['hardware1']) - checkInValue >= 0): #If enough hardware to checkin and doesnt exceed capacity
+            return jsonify(message)
+        elif(availability + checkInValue <= capacity and int(project['hardware1']) - checkInValue >= 0): #If enough hardware to checkin and doesnt exceed capacity
             availability = availability + checkInValue
             hardwareSets.update_one({'name' : 'HardwareSet 1'}, {"$set": {'availability' : availability}})
             print("Checkin successful")
@@ -141,7 +142,7 @@ def checkoutHW1():
             print("Checkout failed, no hardware available")
             message = {"message": "failed", "code": 400}
             return jsonify(message)
-        elif(availability > checkOutAmount):
+        elif(availability >= checkOutAmount):
             availability = availability - checkOutAmount
             hardwareSets.update_one({'name' : 'HardwareSet 1'}, {"$set": {'availability' : availability}})
             print("Checkout successful")
@@ -243,7 +244,7 @@ def checkoutHW2():
             print("Checkout failed, no hardware available")
             message = {"message": "failed", "code": 400}
             return jsonify(message)
-        elif(availability > checkOutAmount):
+        elif(availability >= checkOutAmount):
             availability = availability - checkOutAmount
             hardwareSets.update_one({'name' : 'HardwareSet 2'}, {"$set": {'availability' : availability}})
             print("Checkout successful")
@@ -304,12 +305,7 @@ def joinProject():
     if request.method == 'POST':
         data = request.get_json()
         projectID = data.get('existProjID')
-        sets = []
         existing_project = userProjects.find_one({'projectID' : projectID})
-        project = {'name' : existing_project['name'], 'projectID' : existing_project['projectID'], 'description' : existing_project['description'], 'hardware1' : existing_project['hardware1'], 'hardware2' : existing_project['hardware2']}
-        print(project)
-        for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "availability": 1, "capacity" : 1}):
-             sets.append(x)
 
         if existing_project is None:
             print("Project doesn't exist!")
@@ -317,7 +313,9 @@ def joinProject():
             return jsonify(message)
         else:
             project = {'name' : existing_project['name'], 'projectID' : existing_project['projectID'], 'description' : existing_project['description'], 'hardware1' : existing_project['hardware1'], 'hardware2' : existing_project['hardware2']}
-            print(project)
+            sets = []
+            for x in hardwareSets.find({}, {"_id": 0, "name" : 1, "availability": 1, "capacity" : 1}):
+             sets.append(x)
             if projectID == existing_project['projectID']:
                 print("Successfully joined!")
                 print(sets)
