@@ -50,6 +50,7 @@ function Projects(props) {
             //Partial success
             else if(data.code === 300){
               setProjects(data.project)
+              setSets(data.sets)
               setErrMessage("Checkin complete. Can't check in full amount for HW1")
               setError(true)
             }
@@ -57,7 +58,6 @@ function Projects(props) {
             else if(data.code === 400){
               setErrMessage("Checkin failed for HW1")
               setError(true)
-              setSets(data.sets)
             }
         });
         console.log(`Checking in ${valueHW1} HW1 items for Project ${name}`);
@@ -92,9 +92,6 @@ function Projects(props) {
             else if(data.code === 400){
               setErrMessage("Checkout failed for HW1")
               setError(true)
-              setSets(data.sets)
-              console.log(data.sets)
-              // setSets(data.setss)
             }
         });
         console.log(`Checking out ${valueHW1} HW1 items for Project ${name}`);
@@ -130,8 +127,6 @@ function Projects(props) {
             else if(data.code === 400){
               setErrMessage("Checkin failed for HW2")
               setError(true)
-              setSets(data.sets)
-              // setSets(data.setss)
             }
         });
         console.log(`Checking in ${valueHW2} HW2 items for Project ${name}`);
@@ -159,13 +154,13 @@ function Projects(props) {
             }
             else if(data.code === 300){
               setProjects(data.project)
+              setSets(data.sets)
               setErrMessage("Checkout complete. Can't give full amount for HW2")
               setError(true)
             }
             else if(data.code === 400){
               setErrMessage("Checkout failed for HW2")
               setError(true)
-              setSets(data.sets)
             }
         });
         console.log(`Checking out ${valueHW2} HW2 items for Project ${name}`);
