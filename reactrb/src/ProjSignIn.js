@@ -40,7 +40,7 @@ function ProjSignin() {
         .then(function(data){
             data = JSON.parse(data)
             if(data.code == 400){
-                setErrMessage("The project with " + inputProjID + " already exists!")
+                setErrMessage("The project with ID " + inputProjID + " already exists!")
                 setError(true)
             }
             else{

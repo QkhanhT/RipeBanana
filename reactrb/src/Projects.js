@@ -186,8 +186,7 @@ function Projects(props) {
 
   return (
     <div>
-            <h2>Project</h2>
-            <h3>{project['name']}</h3>
+            <h3>Project: {project['name']}</h3>
                       <div>
                         <p>Hardware Set 1</p>
                         <p>Availability: {sets[0]['availability']}/{sets[0]['capacity']}  Checked Out: {project['hardware1']}</p>
