@@ -72,8 +72,8 @@ function Main() {
 
     return (
         <div className="login-background">
-            <div className="logo">
-                <img src={logo} alt="RipeBanana" width="220" height="200" style={{ marginRight: -20, marginBottom: 20 }}/>
+            <div className="main-logo">
+                <img src={logo} alt="RipeBanana" width="200" height="180" style={{ marginRight: -20, marginBottom: 20 }}/>
             </div>
             <div className="login-container">
                 <form className="form-container" onSubmit={handleSubmit}>

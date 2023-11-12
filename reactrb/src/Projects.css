@@ -1,25 +1,214 @@
-/* Projects.css */
+.outer-project{
 
-/* Style for the project container */
-.project-container {
-    border: 1px solid white;
-    margin-bottom: 20px;
-    padding: 10px;
-    /* display: flex; */
-    justify-content: space-between;
-    align-items: center;
-  }
+}
+
+.project-hardware-header{
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 0px;
+}
+
+.project-hardware-header h1 {
+  font-size: 45px;
+}
+
+.projects-header{
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.projects-header h2{
+  font-size: 35px;
+} 
+
+.hardware-set{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  /* gap: 20px; */
+  margin-right: auto;
+  margin-left: auto;
+  /* margin: auto; */
+  width: 390px;
+  height: 200px;
+  background: #eaeaea;
+  margin-bottom: 30px;
+  padding-bottom: 17px;
+  border-style: solid; /* Set the border style */
+  border-radius: 15px;
+  border: 1px solid #C4A484;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
   
-  /* Style for the project details */
-  .project-details {
-    display: flex;
-    align-items: center;
-  }
-  
-  /* Style for the input and buttons */
-  .project-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
+}
+
+.set-title{
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.set-title h3{
+  font-size: 25px;
+  margin-bottom: 0;
+}
+
+.set-availability{
+  display: flex;
+  justify-content: space-around;
+}
+
+.set-availability p{
+  margin-right: 30px;
+}
+
+
+.set-input{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  align-items: flex-start;
+  margin: auto;
+  height: 75px;
+  border-radius: 10px;
+}
+.set-input input{
+  margin-top: 3px;
+  height: 10px;
+  width: 50px;
+  /* background: #eaeaea; */
+  border: none;
+  outline: none;
+  font-size: 15px;
+  /* border-radius: 10px; */
+  padding: 10px; 
+}
+.set-input input:focus {
+  border: 1px solid #C4A484; /* Default border color */
+  transition: border-color 0.3s;
+}
+
+.set-input label{
+  margin-top:7px;
+  margin-right:6px;
+}
+
+.set-buttons{
+  display: flex;
+  justify-content: space-around;
+}
+
+.checkin-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 110px;
+  height: 45px;
+  color: #fff;
+  background:#C4A484;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  margin-right: 20px;
+}
+.checkin-button:hover {
+  background-color: #A68964; /* Change to a slightly darker brown on hover */
+}
+
+.checkout-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 110px;
+  height: 45px;
+  color: #fff;
+  background:#C4A484;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  margin-right: 20px;
+  /* border-style: solid;
+  border-color: #C4A484; */
+}
+.checkout-button:hover {
+  background-color: #A68964; /* Change to a slightly darker brown on hover */
+}
+
+
+.projects-back-button-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin: 30px auto;
+}
+
+.project-back-buttons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 45px;
+  color: #fff;
+  background:#C4A484;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.project-back-buttons:hover {
+  background-color: #A68964; /* Change to a slightly darker brown on hover */
+}
+
+.projects-logoff-button-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 45px;
+  color: #fff;
+
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  border-style: solid; /* Set the border style */
+  border-radius: 15px;
+  border: solid #C4A484;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+.projects-logoff-button-container:hover {
+  background-color: #A68964; /* Change to a slightly darker brown on hover */
+}
+
+.project-logoff-buttons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 45px;
+  color: #fff;
+  background:none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  /* border-style: solid; */
+  /* border-color: #C4A484; */
+}
+
+.project-logoff-buttons:hover {
+  background-color: red; /* Change to a slightly darker brown on hover */
+}

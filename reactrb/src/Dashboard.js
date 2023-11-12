@@ -14,21 +14,10 @@ function Dashboard() {
 
   return (
     <div className='Dashboard'>
-      <Container>
-        <Typography variant="h4" className='App-header'>
-          Project and Hardware Manager
-        </Typography>
-        <center>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={5}>
-            <Projects
-                initialProjects={passedProjects}
-                initialSets={passedSets}
-              />
-            </Grid>
-          </Grid>
-        </center>
-      </Container>
+      <Projects
+          initialProjects={passedProjects}
+          initialSets={passedSets}
+        />
     </div>
   );
 }

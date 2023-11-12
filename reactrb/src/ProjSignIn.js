@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
+import './ProjSignIn.css';
+import MyButton from './Button';
 
 function ProjSignin() {
     const [inputName, setName] = useState('');
@@ -40,7 +42,7 @@ function ProjSignin() {
         .then(function(data){
             data = JSON.parse(data)
             if(data.code == 400){
-                setErrMessage("The project with " + inputProjID + " already exists!")
+                setErrMessage("The project with ID " + inputProjID + " already exists!")
                 setError(true)
             }
             else{
@@ -101,58 +103,72 @@ function ProjSignin() {
     }
 
     return (
-        <div>
-            <div>
-                <h1>Create New Project</h1>
-                <form onSubmit={handleCreateSubmit}>
-                    <div>
-                        <label>Name</label>
-                        <input
-                        type="text"
-                        value={inputName}
-                        onChange={handleNameChange}
-                        />
-                    </div>
-                    <div>
-                        <label>Description</label>
-                        <input
-                        type="text"
-                        value={inputDesc}
-                        onChange={handleDescChange}
-                        />
-                    </div>
-                    <div>
-                        <label>ProjectID</label>
-                        <input
-                        type="text"
-                        value={inputProjID}
-                        onChange={handleProjIDChange}
-                        />
-                    </div>
-                    <div>
-                        <button type="submit">Create Project</button>
-                    </div>
-                </form>
+        <div className="new-exist-project">
+            <div className="projsignin-header">
+                <h1>Join/Create Project</h1>
             </div>
-            <h2>Or</h2>
-            <div>
-                <h1>Use Existing Project</h1>
-                <form onSubmit={handleExistSubmit}>
-                    <div>
-                        <label>ProjectID</label>
-                        <input
-                        type="text"
-                        value={existProjID}
-                        onChange={handleExistIDChange}
-                        />
+            <div className="create-join-container">
+                <div className="projjoin-container">
+                    <div className="projjoin-header">
+                        <h1>Join Existing Project</h1>
                     </div>
-                    <div>
-                        <button type="submit">Sign In</button>
-                    </div>
-                </form>
+                    <form onSubmit={handleExistSubmit}>
+                    <div className="create-join-input">
+                            <label>ProjectID</label>
+                            <input
+                            type="text"
+                            value={existProjID}
+                            onChange={handleExistIDChange}
+                            placeholder="Ex: 1234"
+                            />
+                        </div>
+                        <div>
+                            <button className="projsignin-buttons" type="submit">Join</button>
+                        </div>
+                    </form>
+                </div>
+                <h2>Or</h2>
+                <div className="projcreate-container">
+                    <h1>Create New Project</h1>
+                    <form onSubmit={handleCreateSubmit}>
+                        <div className="create-join-input">
+                            <label>Name</label>
+                            <input
+                            type="text"
+                            value={inputName}
+                            onChange={handleNameChange}
+                            placeholder="Ex: Project1"
+                            />
+                        </div>
+                        <div className="create-join-input">
+                            <label>Description</label>
+                            <input
+                            type="text"
+                            value={inputDesc}
+                            onChange={handleDescChange}
+                            placeholder="Ex: This is a project"
+                            />
+                        </div>
+                        <div className="create-join-input">
+                            <label>ProjectID</label>
+                            <input
+                            type="text"
+                            value={inputProjID}
+                            onChange={handleProjIDChange}
+                            placeholder="Ex: 1234"
+                            />
+                        </div>
+                        <div>
+                            <button className="projsignin-buttons" type="submit">Create</button>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div>
                 {errorMessage()}
+            </div>
+            <div>
+                <button className="projsignin-logoff-button" label="Log Off" onClick={() => navigate('/')}>Log Off</button>
             </div>
         </div>
     )

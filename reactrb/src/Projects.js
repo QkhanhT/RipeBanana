@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useRef } from 'react';
 import MyButton from './Button';
-import './Projects.css'; // Import the CSS file
+import './Projects.css';
 import {useNavigate } from "react-router-dom";
 
 function Projects(props) {
@@ -49,12 +49,12 @@ function Projects(props) {
             else if(data.code === 300){
               setProjects(data.project)
               setSets(data.sets)
-              setErrMessage("Checkin complete, however you don't have enough HW1 items to check in full amount")
+              setErrMessage("Checkin complete, however you don't have enough HW1 items to check in the full amount.")
               setError(true)
             }
             //Fail
             else if(data.code === 400){
-              setErrMessage("Checkin failed for HW1")
+              setErrMessage("Checkin failed for HW1.")
               setError(true)
             }
         });
@@ -83,13 +83,13 @@ function Projects(props) {
               setError(false)
             }
             else if(data.code === 300){
-              setErrMessage("Checkout complete, however not enough HW1 items to check out full amount")
+              setErrMessage("Checkout complete, however there are not enough HW1 items to check out full amount.")
               setError(true)
               setProjects(data.project)
               setSets(data.sets)
             }
             else if(data.code === 400){
-              setErrMessage("Checkout failed for HW1")
+              setErrMessage("Checkout failed for HW1.")
               setError(true)
             }
         });
@@ -120,11 +120,11 @@ function Projects(props) {
             else if(data.code === 300){
               setProjects(data.project)
               setSets(data.sets)
-              setErrMessage("Checkin complete, however you don't have enough HW2 items to check in full amount")
+              setErrMessage("Checkin complete, however you don't have enough HW2 items to check in the full amount.")
               setError(true)
             }
             else if(data.code === 400){
-              setErrMessage("Checkin failed for HW2")
+              setErrMessage("Checkin failed for HW2.")
               setError(true)
             }
         });
@@ -154,11 +154,11 @@ function Projects(props) {
             else if(data.code === 300){
               setProjects(data.project)
               setSets(data.sets)
-              setErrMessage("Checkout complete, however not enough HW2 items to check out full amount")
+              setErrMessage("Checkout complete, however there are not enough HW2 items to check out full amount.")
               setError(true)
             }
             else if(data.code === 400){
-              setErrMessage("Checkout failed for HW2")
+              setErrMessage("Checkout failed for HW2.")
               setError(true)
             }
         });
@@ -184,48 +184,69 @@ function Projects(props) {
     setSets(sets);
   }, [project, sets]);  
 
-  return (
-    <div>
-            <h2>Project</h2>
-            <h3>{project['name']}</h3>
-                      <div>
-                        <p>Hardware Set 1</p>
-                        <p>Availability: {sets[0]['availability']}/{sets[0]['capacity']}  Checked Out: {project['hardware1']}</p>
-                        {/* <div > */}
-                          <input
-                              type="text"
-                              id="valueHW1"
-                              placeholder="Enter quantity"
-                              value={valueHW1}
-                              onChange={handleValueHW1}
-                          />
-                          <MyButton label="Check In" onClick={() => handleCheckInHW1(project['name'])} />
-                          <MyButton label="Check Out" onClick={() => handleCheckOutHW1(project['name'])} />
-                        {/* </div> */}
-                      </div>
-                      <div>
-                      <p>Hardware Set 2</p>
-                        <p>Availability: {sets[1]['availability']}/{sets[1]['capacity']}  Checked Out: {project['hardware2']}</p>
-                          <input
-                              type="text"
-                              id="valueHW2"
-                              placeholder="Enter quantity"
-                              value={valueHW2}
-                              onChange={handleValueHW2}
-                          />
-                          <MyButton label="Check In" onClick={() => handleCheckInHW2(project['name'])} />
-                          <MyButton label="Check Out" onClick={() => handleCheckOutHW2(project['name'])} />
-                      </div>
-                      <div>
-                        <MyButton label="<--" onClick={() => navigate('/projsignin')}></MyButton>
-                      </div>
-                      <div>
-                        <MyButton label="Log Off" onClick={() => navigate('/')}></MyButton>
-                      </div>
-                      <div>
-                {errorMessage()}
+  return ( 
+    <div className="outer-project">
+        <div className="project-hardware-header">
+          <h1>Project and Hardware Manager</h1>
+        </div>
+        <div className="projects-header">
+          <h2>Project: {project['name']}</h2>
+        </div>
+        <div className="hardware-set">
+            <div className="set-title">
+              <h3>Hardware Set 1</h3>
             </div>
-                      
+            <div className="set-availability">
+              <p>Availability: {sets[0]['availability']}/{sets[0]['capacity']}</p>
+              <p>Checked Out: {project['hardware1']}</p>
+            </div>
+            <div className="set-input">
+            <label>Enter Quantity:</label>
+              <input
+                  type="text"
+                  id="valueHW1"
+                  placeholder="Ex: 12"
+                  value={valueHW1}
+                  onChange={handleValueHW1}
+              />
+            </div>
+            <div className="set-buttons">
+              <button className="checkin-button" onClick={() => handleCheckInHW1(project['name'])} >Check In</button>
+              <button className="checkout-button" onClick={() => handleCheckOutHW1(project['name'])} >Check Out</button>
+            </div>
+        </div>
+        <div className="hardware-set">
+            <div className="set-title">
+              <h3>Hardware Set 2</h3>
+            </div >
+            <div className="set-availability">
+              <p>Availability: {sets[1]['availability']}/{sets[1]['capacity']}</p>
+              <p>Checked Out: {project['hardware2']}</p>
+            </div>
+            <div className="set-input">
+                <label>Enter Quantity:</label>
+                <input
+                    type="text"
+                    id="valueHW2"
+                    placeholder="Ex: 12"
+                    value={valueHW2}
+                    onChange={handleValueHW2}
+                />
+            </div>
+            <div className="set-buttons">
+              <button className="checkin-button" onClick={() => handleCheckInHW2(project['name'])} >Check In</button>
+              <button className="checkout-button" onClick={() => handleCheckOutHW2(project['name'])} >Check Out</button>
+            </div>
+        </div>
+        <div className="projects-back-button-container">
+          <button className="project-back-buttons" onClick={() => navigate('/projsignin')}>Back</button>
+        </div>
+        <div className="projects-logoff-button-container">
+          <button className="project-logoff-buttons" onClick={() => navigate('/')}>Log Off</button>
+        </div>
+        <div>
+            {errorMessage()}
+        </div>        
     </div>
   );
 }

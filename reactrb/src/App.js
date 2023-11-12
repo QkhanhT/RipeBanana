@@ -7,6 +7,7 @@ import SignUp from './SignUp';
 import Dashboard from './Dashboard';
 import PlaceHolder from './PlaceHolder';
 import ProjSignin from './ProjSignIn';
+import './App.css';
 
 function App() {
 

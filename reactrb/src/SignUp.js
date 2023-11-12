@@ -64,8 +64,8 @@ function SignUp() {
 
   return (
     <div className="signup-background">
-      <div className="logo">
-        <img src={logo} alt="RipeBanana" width="220" height="180" style={{ marginRight: -20, marginBottom: 20 }}/>
+      <div className="signup-logo">
+        <img src={logo} alt="RipeBanana" width="200" height="180" style={{ marginRight: -20, marginBottom: 20 }}/>
       </div>
       <div className="signup-container">
         <form className="form-container" onSubmit={handleSubmit}>
